@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
-
+import re
 import sys 
 
 stdoutOrigin=sys.stdout 
@@ -16,11 +16,11 @@ soup=BeautifulSoup(content, 'html.parser')
 print(soup.prettify())
 
 
+setList = []
+for i in soup.find_all(class_='product_price'):
+  setList.append([x[0] for x in re.findall('([0-9]+(\.[0-9]+)?)', i.text)])
+print(setList)
 
-def ifnull(var, val):
-  if var is None:
-    return val
-  return var
 sys.stdout.close()
 sys.stdout=stdoutOrigin
 
